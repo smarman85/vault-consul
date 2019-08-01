@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+  consul:
+    build: 
+      context: ./consul-1.5.2/
+      dockerfile: Dockerfile
+    ports: 
+      - "8300:8300"
+      - "8301:8301"
+      - "8302:8302"
+      - "8500:8500"
+      - "8600:8600"
+  vault:
+    build:
+      context: ./vault-1.1.3/
+      dockerfile: Dockerfile
+    ports:
+      - "8202:8202"
+    cap_add:
+      - IPC_LOCK
+    volumes:
+      - "./extras/dbPolicy.hcl:/var/dbPolicy.hcl"
+
+  mysql:
+    image: mysql:5.7.26
+    volumes:
+      - "./extras/schema.sql:/docker-entrypoint-initdb.d/schema.sql"
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "true"
+    expose:
+      - "3306"
