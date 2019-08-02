@@ -19,7 +19,7 @@ services:
       context: ./vault-1.1.3/
       dockerfile: Dockerfile
     ports:
-      - "8202:8202"
+      - "8200:8200"
     cap_add:
       - IPC_LOCK
     volumes:

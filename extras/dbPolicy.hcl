@@ -1,9 +1,3 @@
-vault operator init -n3 -t 2 
-
-vault operator unseal X 2
-
-vault secrets enable database
-
 vault write database/config/test_db \
     plugin_name=mysql-database-plugin \
     connection_url="{{username}}:{{password}}@tcp(vault-consul_mysql_1:3306)/" \
