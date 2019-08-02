@@ -9,6 +9,8 @@
   "encrypt": "rU8R1vzUNy82smUuS/bQZA==",
   "ui": true,
   "leave_on_terminate": true,
+  "encrypt_verify_incoming": true,
+  "encrypt_verify_outgoing": true,
   "ports": {
     "dns": 53,
     "https": 8501

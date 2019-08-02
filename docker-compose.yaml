@@ -5,12 +5,15 @@ services:
     build: 
       context: ./consul-1.5.2/
       dockerfile: Dockerfile
+    volumes:
+      - "./extras/consul-vault-policy.hcl:/consul/vault-policy.hcl"
     ports: 
       - "8300:8300"
       - "8301:8301"
       - "8302:8302"
       - "8500:8500"
       - "8600:8600"
+
   vault:
     build:
       context: ./vault-1.1.3/
