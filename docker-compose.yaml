@@ -7,6 +7,7 @@ services:
       dockerfile: Dockerfile
     volumes:
       - "./extras/consul-vault-policy.hcl:/consul/vault-policy.hcl"
+      - "./consul-volume:/consul/data/"
     ports: 
       - "8300:8300"
       - "8301:8301"
@@ -24,6 +25,7 @@ services:
       - IPC_LOCK
     volumes:
       - "./extras/dbPolicy.hcl:/var/dbPolicy.hcl"
+      - "./vault-volume:/vault/data/"
 
   mysql:
     image: mysql:5.7.26
