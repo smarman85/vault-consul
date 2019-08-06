@@ -3,7 +3,7 @@
   "data_dir": "/consul/data",
   "domain": "consul",
   "client_addr": "0.0.0.0",
-  "bind_addr": "172.21.0.3",
+  "bind_addr": "172.24.0.3",
   "log_level": "DEBUG",
   "server": true,
   "bootstrap": true,

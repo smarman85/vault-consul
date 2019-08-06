@@ -1,13 +1,16 @@
 FROM smarman/ubuntu18.04:latest
 
 # This is the release of Vault to pull in.
+ARG CONSUL_VERSION=1.5.2
 ARG VAULT_VERSION=1.1.3
 ENV VAULT_ADDR=http://127.0.0.1:8200
 
 # Create a vault user and group first so the IDs get set the same way,
 # even as the rest of this may change over time.
 RUN addgroup vault && \
-    useradd -m -g vault vault
+    useradd -m -g vault vault && \
+    addgroup consul && \
+    useradd -m -g consul consul
 
 # Set up certificates, our base tools, and Vault.
 RUN set -eux; \
@@ -19,6 +22,8 @@ RUN set -eux; \
     cd /tmp/build && \
     wget https://releases.hashicorp.com/vault/${VAULT_VERSION}/vault_${VAULT_VERSION}_linux_amd64.zip && \
     unzip -d /bin vault_${VAULT_VERSION}_linux_amd64.zip && \
+    wget https://releases.hashicorp.com/consul/${CONSUL_VERSION}/consul_${CONSUL_VERSION}_linux_amd64.zip && \
+    unzip -d /bin consul_${CONSUL_VERSION}_linux_amd64.zip && \
     cd /tmp && \
     rm -rf /tmp/build && \
     rm -rf /root/.gnupg
@@ -32,7 +37,8 @@ RUN mkdir -p /vault/logs && \
     mkdir -p /vault/file && \
     mkdir -p /vault/config && \
     chown -R vault:vault /vault && \
-    setcap cap_ipc_lock=+ep $(readlink -f $(which vault))
+    setcap cap_ipc_lock=+ep $(readlink -f $(which vault)) 
+    
 
 # Expose the logs directory as a volume since there's potentially long-running
 # state in there
