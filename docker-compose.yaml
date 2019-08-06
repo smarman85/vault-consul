@@ -32,7 +32,6 @@ services:
         #      - vault-network
     volumes:
       - "./extras/dbPolicy.hcl:/var/dbPolicy.hcl"
-      - "./vault-1.1.3/config/consul-config.json:/var/consul.json"
       - "./vault-volume:/vault/data/"
 
   mysql:

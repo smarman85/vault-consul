@@ -17,6 +17,7 @@ RUN set -eux; \
     apt-get -y update && \
     apt-get install -y openssl \
     dumb-init \
+    net-tools \
     libcap2-bin && \
     mkdir -p /tmp/build && \
     cd /tmp/build && \
@@ -28,16 +29,25 @@ RUN set -eux; \
     rm -rf /tmp/build && \
     rm -rf /root/.gnupg
 
+COPY ./config/vault-config.json /vault/config/vault-config.json
+COPY ./config/consul-config.json /var/consul.json
+
 # /vault/logs is made available to use as a location to store audit logs, if
 # desired; /vault/file is made available to use as a location with the file
 # storage backend, if desired; the server will be started with /vault/config as
 # the configuration directory so you can add additional config files in that
 # location.
+
 RUN mkdir -p /vault/logs && \
     mkdir -p /vault/file && \
     mkdir -p /vault/config && \
     chown -R vault:vault /vault && \
-    setcap cap_ipc_lock=+ep $(readlink -f $(which vault)) 
+    mkdir -p /consul/data && \
+    chown -R consul:consul /consul && \
+    setcap cap_ipc_lock=+ep $(readlink -f $(which vault))  && \
+    chown consul:consul /var/consul.json && \
+    sed -i "s/BIND_ADDR/$(ifconfig eth0 | grep inet | awk '{print $2}')/g" "/var/consul.json"
+    
     
 
 # Expose the logs directory as a volume since there's potentially long-running
@@ -58,7 +68,6 @@ EXPOSE 8200
 # For production derivatives of this container, you shoud add the IPC_LOCK
 # capability so that Vault can mlock memory.
 #COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
-COPY ./config/vault-config.json /vault/config/vault-config.json
 #ENTRYPOINT ["docker-entrypoint.sh"]
 USER vault
 ENTRYPOINT ["/usr/bin/dumb-init", "--"]
@@ -68,5 +77,6 @@ ENTRYPOINT ["/usr/bin/dumb-init", "--"]
 
 # !!!!! remove disable_mlock: false in config file before going prod
 CMD ["vault", "server", "-config", "/vault/config/vault-config.json"]
-#CMD ["vault", "server", "-dev"]
+#USER consul
+#CMD ["consul", "agent", "-config-file", "/var/consul.json"]
 #CMD ["/bin/bash"]
