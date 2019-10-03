@@ -89,3 +89,15 @@ curl --request POST \
   --data "{\"db_name\": \"test_db\", \"creation_statements\": \"CREATE USER '{{name}}'@'%' IDENTIFIED BY '{{password}}';GRANT SELECT ON test_db.* TO '{{name}}'@'%';\", \"default_ttl\": \"10m\", \"max_ttl\": \"24h\" }" \
   http://127.0.0.1:8200/v1/database/roles/read-only
 ```
+
+
+
+vault secrets enable -path=secret/ kv
+or:
+vault secrets enable kv-v2
+vault secrets enable -version=2 -path=secret/ kv
+
+
+Unseal Key 1: Rm2m9ydgNLi2g15JkK016ZChzj5CkxxoECOtJMxunoQ=
+
+Initial Root Token: s.7hePQ91k0IcG2P5koW32CSMc

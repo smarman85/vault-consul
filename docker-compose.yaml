@@ -8,21 +8,28 @@ services:
     volumes:
       - "./extras/consul-vault-policy.hcl:/consul/vault-policy.hcl"
       - "./consul-volume:/consul/data/"
+        #    networks:
+        #      - consul-network
     ports: 
-      - "8300:8300"
-      - "8301:8301"
-      - "8302:8302"
-      - "8500:8500"
-      - "8600:8600"
+      - "8300"
+      - "8301"
+      - "8302"
+      - "8500"
+      - "8600"
 
   vault:
     build:
       context: ./vault-1.1.3/
       dockerfile: Dockerfile
     ports:
-      - "8200:8200"
+      - "8200"
+      - "8302"
+      - "8500"
+      - "8600"
     cap_add:
       - IPC_LOCK
+        #    networks:
+        #      - vault-network
     volumes:
       - "./extras/dbPolicy.hcl:/var/dbPolicy.hcl"
       - "./vault-volume:/vault/data/"
@@ -35,3 +42,7 @@ services:
       MYSQL_ALLOW_EMPTY_PASSWORD: "true"
     expose:
       - "3306"
+
+        #networks:
+        #  consul-network:
+        #  vault-network:

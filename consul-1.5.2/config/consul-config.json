@@ -3,6 +3,8 @@
   "data_dir": "/consul/data",
   "domain": "consul",
   "client_addr": "0.0.0.0",
+  "bind_addr": "0.0.0.0",
+  "advertise_addr": "192.168.144.2",
   "log_level": "DEBUG",
   "server": true,
   "bootstrap": true,

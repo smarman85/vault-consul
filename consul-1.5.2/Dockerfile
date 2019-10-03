@@ -18,7 +18,7 @@ RUN set -eux && \
     apt-get update && \
     apt-get install -y curl \
     dumb-init \
-    iproute2 \
+    net-tools \
     openssl \
     jq && \
     wget ${HASHICORP_RELEASES}/consul/${CONSUL_VERSION}/consul_${CONSUL_VERSION}_linux_amd64.zip && \
@@ -28,12 +28,15 @@ RUN set -eux && \
 # tiny smoke test to ensure the binary we downloaded runs
     consul version
 
+COPY ./config/consul-config.json /consul/config/consul-config.json
+
 # The /consul/data dir is used by Consul to store state. The agent will be started
 # with /consul/config as the configuration directory so you can add additional
 # config files in that location.
 RUN mkdir -p /consul/data && \
     mkdir -p /consul/config && \
-    chown -R consul:consul /consul
+    chown -R consul:consul /consul && \
+    sed -i "s/ADVERTISE_ADDR/$(ifconfig eth0 | grep inet | awk '{print $2}')/g" "/consul/config/consul-config.json"
 
 # set up nsswitch.conf for Go's "netgo" implementation which is used by Consul,
 # otherwise DNS supercedes the container's hosts file, which we don't want.
@@ -58,7 +61,6 @@ EXPOSE 8500 8600 8600/udp
 # Consul doesn't need root privileges so we run it as the consul user from the
 # entry point script. The entry point script also uses dumb-init as the top-level
 # process to reap any zombie processes created by Consul sub-processes.
-COPY ./config/consul-config.json /consul/config/consul-config.json
 ENTRYPOINT ["/usr/bin/dumb-init", "--"]
 
 # By default you'll get an insecure single-node development server that stores
@@ -73,4 +75,3 @@ CMD ["consul", "agent", "-config-file", "/consul/config/consul-config.json"]
 
 # testing:
 #CMD ["/bin/bash"]
-
