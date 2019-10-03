@@ -3,7 +3,7 @@
     "consul": {
       "address": "consul:8500",
       "path": "vault/",
-      "token": "e3202dd8-33a9-3183-318c-ee211cb1820b"
+      "token": "cfa60fba-e41b-56e3-eba3-039d728df0df"
     }
   },
   "listener": {
