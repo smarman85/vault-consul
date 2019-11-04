@@ -10,6 +10,7 @@ services:
       - "./consul-volume:/consul/data/"
         #    networks:
         #      - consul-network
+    restart: always
     ports: 
       - "8300"
       - "8301"
@@ -26,6 +27,7 @@ services:
       - "8302"
       - "8500"
       - "8600"
+    restart: always
     cap_add:
       - IPC_LOCK
         #    networks:

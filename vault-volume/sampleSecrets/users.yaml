@@ -1,0 +1,12 @@
+admin:
+  username: alf
+  password: alf@123
+
+security:
+  username: sam
+  password: sam@123
+
+Dev:
+  username: dan
+  password: dan@123
+

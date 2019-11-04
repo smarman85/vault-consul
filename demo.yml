@@ -1,0 +1,23 @@
+vault login s.6NlaKTqxCU9X5LFjmVWERKAy
+
+vault auth disable userpass
+vault auth enable userpass
+
+vault policy write admin admin.hcl
+vault policy write security security.hcl
+vault policy write dev dev.hcl
+vault policy list
+
+vault write auth/userpass/users/alf password='alf@123' policies=admin
+vault write auth/userpass/users/sam password='sam@123' policies="security"
+vault write auth/userpass/users/dan password='dan@123' policies=dev
+
+vault kv put secret/qa/admin/env @env.json
+vault kv put secret/qa/global/kingdom-keys @kingdom.json
+
+vault login -method=userpass username=sam password=sam@123
+vault kv list secret
+vault kv put secret/qa/admin/env this=junk
+
+vault login -method=userpass username=dan password=dan@123
+vault kv list secret/qa
