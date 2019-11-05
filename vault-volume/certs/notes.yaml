@@ -1,0 +1,12 @@
+Go packages to generate certs: (or use openssl commands)
+go get -u github.com/cloudflare/cfssl/cmd/cfssl
+go get -u github.com/cloudflare/cfssl/cmd/cfssljson
+
+run:
+  cfssl genkey config.json | cfssljson -bare certificate
+
+convert pem to .crt:
+ openssl x509 -outform der -in your-cert.pem -out your-cert.crt
+
+convert pem to .key:
+ openssl pkey -in key.pem -out cert.key
