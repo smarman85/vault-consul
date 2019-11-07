@@ -10,9 +10,10 @@
     "tcp":{
       "address": "0.0.0.0:8200",
       "tls_disable": 0,
-      "tls_cert_file": "/vault/data/certs/cert.pem",
-      "tls_key_file": "/vault/data/certs/key.pem"
+      "tls_cert_file": "/vault/data/certs/test2/mydomain.com.crt",
+      "tls_key_file": "/vault/data/certs/test2/mydomain.com.key"
     }
   },
-  "ui": true
+  "ui": true,
+  "api_addr": "https://127.0.0.1:8200"
 }
