@@ -3,16 +3,18 @@
     "consul": {
       "address": "consul:8500",
       "path": "vault/",
-      "token": "a75279d8-74a8-e11c-d296-993762ea5d78"
+      "token": "4d1e3588-5018-e39b-d186-0f53f3e3e222"
     }
   },
   "listener": {
     "tcp":{
       "address": "0.0.0.0:8200",
       "tls_disable": 0,
-      "tls_cert_file": "/vault/data/certs/cert.pem",
-      "tls_key_file": "/vault/data/certs/key.pem"
+      "tls_cert_file": "/vault/data/certs/cfssl/selfsigned2.pem",
+      "tls_key_file": "/vault/data/certs/cfssl/selfsigned2-key.pem"
     }
   },
-  "ui": true
+  "ui": true,
+  "api_addr": "https://127.0.0.1:8200",
+  "cluster_addr": "https://127.0.01:8201"
 }
