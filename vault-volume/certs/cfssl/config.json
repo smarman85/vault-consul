@@ -1,12 +1,18 @@
 {
-  "CN": "locadev.com",
-  "names": [
-    {
-      "C": "US",
-      "L": "San Francisco",
-      "O": "Macbook Pro",
-      "OU": "Vault concept",
-      "ST": "California"
-    }
-  ]
+    "hosts": [
+        "127.0.0.1",
+        "0.0.0.0"
+    ],
+    "CN": "127.0.0.1",
+    "key": {
+        "algo": "rsa",
+        "size": 2048
+    },
+    "names": [{
+        "C": "US",
+        "L": "San Francisco",
+        "O": "Example Company, LLC",
+        "OU": "Operations",
+        "ST": "California"
+    }]
 }

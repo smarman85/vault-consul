@@ -1,4 +1,4 @@
-vault login s.6NlaKTqxCU9X5LFjmVWERKAy
+vault login 
 
 vault auth disable userpass
 vault auth enable userpass
