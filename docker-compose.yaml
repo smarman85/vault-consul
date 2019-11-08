@@ -28,6 +28,9 @@ services:
       - "8500"
       - "8600"
     restart: always
+    environment: 
+    - VAULT_CACERT=/vault/data/certs/cfssl/selfsigned.pem
+    - VAULT_ADDR=https://127.0.0.1:8200
     cap_add:
       - IPC_LOCK
         #    networks:

@@ -10,12 +10,12 @@
     "tcp":{
       "address": "0.0.0.0:8200",
       "cluster_address": "0.0.0.0:8201",
-      "tls_disable": 1,
-      "tls_cert_file": "/vault/data/certs/cfssl/selfsigned2.pem",
-      "tls_key_file": "/vault/data/certs/cfssl/selfsigned2-key.pem"
+      "tls_disable": 0,
+      "tls_cert_file": "/vault/data/certs/cfssl/selfsigned.pem",
+      "tls_key_file": "/vault/data/certs/cfssl/selfsigned-key.pem"
     }
   },
   "ui": true,
-  "api_addr": "http://127.0.0.1:8200",
-  "cluster_addr": "http://127.0.0.1:8201"
+  "api_addr": "https://127.0.0.1:8200",
+  "cluster_addr": "https://127.0.0.1:8201"
 }
